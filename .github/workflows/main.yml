@@ -22,7 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: 'Run pre-build steps'
-        run: build-scripts/prebuild ${{ secrets.GITHUB_TOKEN }}
+        run: build-scripts/prebuild
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: 'Upload documentation for later build steps'
         uses: actions/upload-artifact@v7
         with:
@@ -31,8 +33,8 @@ jobs:
       - name: 'Upload external libs'
         uses: actions/upload-artifact@v7
         with:
-          name: external-libs
-          path: external-libs-dist
+          name: distribution-vcpkg
+          path: vcpkg.zip
       - name: 'Upload doc distribution'
         uses: actions/upload-artifact@v7
         with:
@@ -68,10 +70,10 @@ jobs:
         with:
           name: doc
           path: .
-      - name: 'Download external libs'
+      - name: 'Download vcpkg cache'
         uses: actions/download-artifact@v8
         with:
-          name: external-libs
+          name: distribution-vcpkg
           path: .
       - name: 'Build, test, generate binary distributions'
         shell: cmd

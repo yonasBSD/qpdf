@@ -13,6 +13,7 @@ of this file, but was split off to make it easier for new developers to find rel
 * [GOOGLE OSS-FUZZ](#google-oss-fuzz)
 * [RELEASE PREPARATION](#release-preparation)
 * [CREATING A RELEASE](#creating-a-release)
+* [VCPKG](#vcpkg)
 
 
 ## VERSIONS
@@ -104,11 +105,6 @@ of this file, but was split off to make it easier for new developers to find rel
   * qtest-driver, TestDriver.pm in qtest source
 
   Copyright last updated: 2026.
-
-* Take a look at "External Libraries" in TODO to see if we need to
-  make any changes. There is still some automation work left to do, so
-  handling external-libs releases is still manual. See also
-  README-maintainer in external-libs.
 
 * Check for open fuzz crashes at https://oss-fuzz.com
 
@@ -293,5 +289,30 @@ rsync -n -vrlcO $release/ sourceforge_login,qpdf@frs.sourceforge.net:/home/frs/p
   reference the file by name).
 
 * Email the qpdf-announce list. Mention the email address of the release signer.
+
+## VCPKG
+
+This is historical information about how `vcpkg` was set up. Before the release of qpdf 12.3.3, the
+qpdf/external-libs repository was deprecated, and external libraries were generated using `vcpkg`.
+There are several parts to this.
+
+### One-time Setup
+
+* Create an orphan branch (with disconnected history from main) called
+  `vcpkg-cache`. Just put a README.md in it.
+* Tag the branch with `vcpkg-cache-v1` and push the tag.
+* Create a release from the tag.
+
+### Ongoing Maintenance
+
+* Weekly, the .github/workflows/vcpkg.yml workflow updates external libraries and pushes a new
+  version to [the release](https://github.com/qpdf/qpdf/releases/tag/vcpkg-cache-v1). This ensures
+  we are always building and releasing with recent versions.
+* `vcpkg` releases are not built on pull requests or pushes to any branch, but the workflow can run
+  manually using workflow dispatch (manually run action). Only a manual dispatch from main or a
+  scheduled run from main will update the release.
+
+Usually, this should be a completely hands-off process, but it may be necessary to intervene in the
+event of a bad upstream release of one of the dependencies or some other infrastructure failure.
 
 [//]: # (cSpell:ignore pikepdfs readthedocsorg dgenerate .)

@@ -47,6 +47,17 @@ more detail.
       a new enough bash and zsh are not installed. This option is enabled by
       default in maintainer mode.
 
+    - Windows-specific: `external-libs` is deprecated and is replaced with
+      `vcpkg`. This includes the following changes:
+
+      - Instead of downloading external-libs, you can download and extract the
+        latest zip from
+        <https://github.com/qpdf/qpdf/releases/tag/vcpkg-cache-v1>`__. CMake
+        will automatically use it.
+
+      - The script ``./vcpkg-setup-win`` is available for Windows users who want
+        to use qpdf's vcpkg integration.
+
 12.3.2: January 24, 2026
   - Bug fixes
 
