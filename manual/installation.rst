@@ -699,7 +699,7 @@ and cmake options. There are a few exceptions:
   ``REQUIRE_CRYPTO_NATIVE``. For details, see :ref:`crypto.build`.
 
 - The ``--enable-external-libs`` option is no longer available. The
-  cmake build detects the presence of ``external-libs`` automatically.
+  cmake build detects the presence of external libs automatically.
   See :file:`README-windows.md` in the source distribution for a more
   in-depth discussion.
 
